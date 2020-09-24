@@ -63,7 +63,8 @@ export default new Router({
     {
       path: '/home/goodsinfo/:id',
       name: 'goodsinfo',
-      component: Goodsinfo
+      component: Goodsinfo,
+      props: true
     }
   ],
   linkActiveClass: 'mui-active'

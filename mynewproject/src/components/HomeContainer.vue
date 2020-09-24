@@ -2,11 +2,13 @@
   <div>
     <div class="mint-swipe">
      <!-- 使用图片轮播图 -->
-    <mt-swipe :auto="4000">
+    <!-- <mt-swipe :auto="4000">
         <mt-swipe-item v-for="(item,index) in pitures" :key="index">
             <img :src="item.img" alt="">
         </mt-swipe-item>
-    </mt-swipe>
+    </mt-swipe> -->
+
+    <swiper :lunbotu="pitures" :imagename="'img'" :isfull="true"></swiper>
     </div> 
 
 
@@ -35,6 +37,8 @@
 </template>
 
 <script>
+import swiper from './sub-components/Swiper.vue'
+
 export default {
   name: 'HelloWorld',
   data () {
@@ -56,32 +60,35 @@ export default {
               console.log('数据没有拿到')
           }
       } 
+  },
+  components: { //   注册子组件
+    swiper
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-.mint-swipe {
-    height:180px;
+// .mint-swipe {
+//     height:180px;
 
 
-    .mint-swipe-item{
-        img{
-            width: 100%;
-            height: 100%;
-        }
-        &:nth-child(1){
-            background-color: skyblue;
-        }
-        &:nth-child(2){
-            background-color: pink;
-        }
-        &:nth-child(3){
-            background-color: yellow;
-        }
-    }
-}
+//     .mint-swipe-item{
+//         img{
+//             width: 100%;
+//             height: 100%;
+//         }
+//         &:nth-child(1){
+//             background-color: skyblue;
+//         }
+//         &:nth-child(2){
+//             background-color: pink;
+//         }
+//         &:nth-child(3){
+//             background-color: yellow;
+//         }
+//     }
+// }
 .mui-grid-view{
        li {
            img{
