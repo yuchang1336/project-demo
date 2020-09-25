@@ -3,7 +3,7 @@
     <div class="goods-list">
 
       <!-- 商品列表区域 -->
-      <router-link tag="div" :to="'/home/goodsinfo/'+item.id" class="goods-item" v-for="item in goodlist" :key="item.id">
+      <router-link tag="div" :to="'/home/goodsinfo/' + item.id" class="goods-item" v-for="item in goodlist" :key="item.id">
           <img :src="item.img_url" alt="">
           <h1 class="title">{{item.title}}</h1>
           <div class="info">
@@ -44,6 +44,7 @@ export default {
       )
       if(data.status === 0){
         // if(data.message.length <= 0)
+        // console.log(data.message)
         return this.goodlist = this.goodlist.concat(data.message)
       }
     },

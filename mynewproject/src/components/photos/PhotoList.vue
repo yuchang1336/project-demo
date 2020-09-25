@@ -39,7 +39,7 @@
 
 <script>
 // 导入 mui 的JS文件， 就可以使用 mui 来初始化 滑动控件了
-// import mui from '@/assets/lib/js/mui.js',     ******    未完成    ******
+import mui from '@/assets/lib/js/mui.js'
 
 
 export default {

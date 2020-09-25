@@ -10,6 +10,7 @@ import Newsinfo from '@/components/news/Newsinfo'
 import photoList from '@/components/photos/photoList'
 import GoodsList from '@/components/goods/GoodsList'
 import Goodsinfo from '@/components/goods/Goodsinfo'
+import GoodsDesc from '@/components/goods/GoodsDesc'
 
 Vue.use(Router)
 
@@ -64,6 +65,12 @@ export default new Router({
       path: '/home/goodsinfo/:id',
       name: 'goodsinfo',
       component: Goodsinfo,
+      props: true
+    },
+    {
+      path: '/home/goodsdesc/:id',
+      name: 'goodsDesc',
+      component: GoodsDesc,
       props: true
     }
   ],

@@ -3,9 +3,11 @@
 
     <!-- 顶部 header 区域 -->
     <mt-header fixed title="商城">
-      <router-link to="/" slot="left">
+      <!-- <router-link to="/" slot="left" > -->
+      <span slot="left" @click="goBack" v-show="flag">
         <mt-button icon="back">返回</mt-button>
-      </router-link>
+      </span>
+      <!-- </router-link> -->
       <mt-button icon="more" slot="right"></mt-button>
     </mt-header>
     
@@ -44,7 +46,35 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  data() {
+    return {
+      flag: true   // 默认显示返回按钮
+    }
+  },
+  methods: {
+    goBack() {
+      // 点击返回按钮，向后跳转
+      this.$router.go(-1)
+    },
+    created() {
+      if(this.$route.path === "/home") {
+          this.flag = false
+        }else{
+          this.flag = true
+        }
+    },
+    watch: {
+      // 第一次，当页面刷新后，不会触发 watch 中监听的路由地址的变化
+      '$route.path': function(newVal, oldVal) {
+        if(newVal === "/home") {
+          this.flag = false
+        }else{
+          this.flag = true
+        }
+      }
+    }
+  }
 }
 </script>
 
