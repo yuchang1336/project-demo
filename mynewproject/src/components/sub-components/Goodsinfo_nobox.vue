@@ -1,7 +1,8 @@
 <template>
     <div class="mui-numbox" data-numbox-min='1' :data-numbox-max='max'>
         <button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-        <input id="test" class="mui-input-numbox" type="number" value="1" />
+        <!-- 监听文本框的 change 事件， 来动态获取选择到的数量 -->
+        <input id="test" class="mui-input-numbox" type="number" value="1" ref="nobox" @change="countedChanged"/>
         <button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
     </div>
 </template>
@@ -18,6 +19,17 @@ export default {
         console.log(this.max)
         // 当组件挂载到页面中之后，初始化  数字框
         mui(".mui-numbox").numbox()
+    },
+    methods: {
+        // 获取选择的商品数量
+        countedChanged() {
+            const val = this.$refs.nobox.value
+            console.log("数字改变了" + val)
+
+            // 每当 nobox 子组件的  count 值变化的时候,要立即把最新的数量值传递给   goodsinfo 父组件，这样每当点击加入购物车按钮时
+            // 就能把最新的 count 值同步到购物车的徽标中，这样就涉及到父子组件之间的传值了，子组件向父组件传递数据
+            this.$emit("func",parseInt(val))
+        }
     },
     props: ["max"], //  接收父组件传递过来的库存量 max
     watch: { 

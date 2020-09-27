@@ -1,6 +1,8 @@
 <template>
   <div class="comment">
-    <h4>发表评论--{{newsid}}</h4>
+    <h4>发表评论
+        <!-- --{{newsid}} -->
+    </h4>
     <hr>
     <textarea placeholder="评论内容(最多为100字)" maxlength="100" v-model="msg"></textarea>
     <mt-button type="primary" size="large" @click="postMsg">发表</mt-button>
