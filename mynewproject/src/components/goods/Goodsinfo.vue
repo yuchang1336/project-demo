@@ -39,6 +39,9 @@
                         ，因此， 可能导致这样的  情况 ： box组件 先于 Ajax 渲染出来 ，此时，组件被渲染的时候，  
                         goodsinfo 为空对象， 因此，传递到子组件中的 stock_quantity 是 undefined-->
                         <!-- 这里的  max 为 库存量 -->
+
+
+                        <!-- goodsinfo_box 为子组件，通过 $emit 的方法，向 goodsinfo 这个父组件传值 -->
                         <nobox :max="goodsinfo.stock_quantity" @func="getSlectedCount"></nobox>
                     </p>
                     <div>

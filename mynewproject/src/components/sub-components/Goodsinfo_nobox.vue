@@ -16,7 +16,7 @@ export default {
         }
     },
     mounted(){
-        console.log(this.max)
+        // console.log(this.max)
         // 当组件挂载到页面中之后，初始化  数字框
         mui(".mui-numbox").numbox()
     },
@@ -28,7 +28,7 @@ export default {
 
             // 每当 nobox 子组件的  count 值变化的时候,要立即把最新的数量值传递给   goodsinfo 父组件，这样每当点击加入购物车按钮时
             // 就能把最新的 count 值同步到购物车的徽标中，这样就涉及到父子组件之间的传值了，子组件向父组件传递数据
-            this.$emit("func",parseInt(val))
+            this.$emit("func", parseInt(val))
         }
     },
     props: ["max"], //  接收父组件传递过来的库存量 max
