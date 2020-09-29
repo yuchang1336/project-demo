@@ -7,16 +7,24 @@ import router from './router'
 // 1.导入 vuex  
 // 2.安装 vuex 到 vue 上
 // 3.创建一个公共状态对象
-import Vuex from 'vuex' 
-Vue.use(Vuex)
+// import Vuex from 'vuex' 
+// Vue.use(Vuex)
 
-const store = new Vuex.Store({
-  state: {
-    // state 类似于 组件对象中的 data 属性
-    // 这个state 中存储数据，就是我们全局共享的数据
-    count: 0  //全局中共享了一个 count 值
-  }
-})
+// const store = new Vuex.Store({
+//   state: {
+//     // state 类似于 组件对象中的 data 属性
+//     // 这个state 中存储数据，就是我们全局共享的数据
+//     count: 0  //全局中共享了一个 count 值
+//   },
+//   mutations: {
+
+//   },
+//   getters: {
+
+//   }
+// })
+import store from './store.js'  //  导入状态管理对象
+
 
 // 导入 mint-ui
 import Mint from 'mint-ui'

@@ -33,7 +33,7 @@
 			</router-link>
 			<router-link class="my-tab-item" to="/shop">
 				<!-- <span class=" mui-icon-extra mui-icon-extra-cart"></span> -->
-        <span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge" id="badge">0</span></span>
+        <span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge" id="badge">{{totalcount}}</span></span>
 				<span class="mui-tab-label">购物车</span>
 			</router-link>
 			<router-link class="my-tab-item" to="/search">
@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'  //  导入辅助函数 mapGetters
+
 export default {
   name: 'App',
   data() {
@@ -64,6 +66,9 @@ export default {
           this.flag = true
       }
     },
+  },
+  computed: {
+    ...mapGetters(["totalcount"])     // 调用 vuex 中的 mutations 中的 getters 里 totalcount 方法
   },
   watch: {
     // 第一次，当页面刷新后，不会触发 watch 中监听的路由地址的变化
