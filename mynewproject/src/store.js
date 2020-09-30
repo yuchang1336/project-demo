@@ -5,12 +5,16 @@ import Vue from 'vue'
 import Vuex from 'vuex' 
 Vue.use(Vuex)
 
+
+//  每当项目初始话的时候，先从 localstorage 里面取出存储的数据
+let car = JSON.parse(localStorage.getItem("cart") || '[]' )
+
 const store = new Vuex.Store({
   state: {
     // state 类似于 组件对象中的 data 属性
     // 这个state 中存储数据，就是我们全局共享的数据
     // 在cart中，应该把每个商品存储为一个对象 { id, count }
-    cart: []
+    cart: car
   },
   mutations: {
     addToCart(state, goods) {
@@ -31,7 +35,7 @@ const store = new Vuex.Store({
         if(!flag) {
             state.cart.push(goods)
         }
-        localStorage.setItem("cart", window.JSON.stringify(state.cart))
+        localStorage.setItem("cart", JSON.stringify(state.cart))
     }
   },
   getters: {
@@ -42,6 +46,22 @@ const store = new Vuex.Store({
             c += item.count
         })
         return c
+    },
+    idstr(state) {
+      // 获取购物车中所有的商品的id字符串
+      let arr = []
+      state.cart.forEach(item => arr.push(item.id))
+      return arr.join(',')
+    },
+    countObj(state) {
+      let o = {}
+      state.cart.forEach(item => o[item.id] = item.count)
+      return o
+      /* {  88: 3,
+            90: 4
+         } 
+         返回的是勾选的商品数量
+      */
     }
   }
 })
