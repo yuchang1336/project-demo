@@ -40,7 +40,7 @@
             <mt-button type="danger">结算</mt-button>
 					</div>
 				</div>
-			</div>
+		</div>
 </div>
 </template>
 
@@ -89,7 +89,7 @@ export default {
       height: 60px;
     }
     h1 {
-      font-size: 17px;
+      font-size: 14px;
     }
     .info {
       display: flex;
