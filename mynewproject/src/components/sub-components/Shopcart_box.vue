@@ -9,6 +9,7 @@
 
 <script>
 import mui from '../../assets/lib/js/mui.js'
+import { mapMutations } from 'vuex'
 export default {
     data() {
         return {
@@ -23,12 +24,16 @@ export default {
     methods: {
         // 获取选择的商品数量
         countedChanged() {
-            const val = this.$refs.nobox.value
+            const val = parseInt(this.$refs.nobox.value)
             console.log("数字改变了" + val)
 
-        }
+            // 调用 mapMutations 的方法，更新购物车下面的数量值，动态变化
+            this.updateGoodsCount({id: this.id, count: val})
+
+        },
+        ...mapMutations(['updateGoodsCount'])
     },
-    props: ["initcount"]
+    props: ["initcount","id"]
 
 }
 </script>

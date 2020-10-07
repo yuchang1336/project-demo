@@ -13,7 +13,7 @@ const store = new Vuex.Store({
   state: {
     // state 类似于 组件对象中的 data 属性
     // 这个state 中存储数据，就是我们全局共享的数据
-    // 在cart中，应该把每个商品存储为一个对象 { id, count }
+    // 在cart中，应该把每个商品存储为一个对象 { id, count, selected}
     cart: car
   },
   mutations: {
@@ -35,7 +35,28 @@ const store = new Vuex.Store({
         if(!flag) {
             state.cart.push(goods)
         }
+        // 为了持续化存储购物车的数量，可以把购物车的商品，序列化出来，存储到 localstorage 中
         localStorage.setItem("cart", JSON.stringify(state.cart))
+    },
+    updateGoodsCount(state,goods) {
+      // 更新传递过来的商品信息，更新购物车中商品的数量
+      state.cart.some(item => {
+        if(item.id == goods.id) {
+          item.count = goods.count
+          return true
+        }
+      })
+      localStorage.setItem("cart", JSON.stringify(state.cart))
+    },
+    // 根据 id 删除 vuex 中对应的商品
+    delFromCart(state, id) {
+      state.cart.some((item, i) => {
+        if(item.id == id) {
+          state.cart.splice(i, 1)
+          return true
+        }
+      })
+      localStorage.setItem("cart", JSON.stringify(state.cart))
     }
   },
   getters: {
@@ -61,6 +82,18 @@ const store = new Vuex.Store({
             90: 4
          } 
          返回的是勾选的商品数量
+      */
+    },
+    selectedObj(state) {
+      // id 对应的商品值被选中了
+      let o = {}
+      state.cart.forEach(item => o[item.id] = item.selected)
+      return o
+      /* {  88: 3,
+            90: 4,
+            selected: true
+         } 
+         返回的是默认值
       */
     }
   }

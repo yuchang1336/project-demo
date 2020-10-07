@@ -10,7 +10,8 @@
             <!-- 信息区域 -->
             <div class="info">
               <h1>
-                {{item.title}}------{{countObj[item.id]}}
+                {{item.title}}
+                <!-- ------{{countObj[item.id]}} -->
               </h1>
               <div class="goodsinfo">
                 <span class="price">￥{{item.sell_price}}</span>
@@ -18,9 +19,9 @@
 
 
               <!-- 表示这条商品的数量，将这个参数传给 nobox 选择框-->
-                <nobox :initcount="countObj[item.id]"></nobox>
+                <nobox :initcount="countObj[item.id]" :id="item.id"></nobox>
 
-                <a href="#">删除</a>
+                <a href="#" @click.prevent="del(item.id)">删除</a>
               </div>
             </div>
 					</div>
@@ -46,7 +47,7 @@
 
 <script>
 import nobox from '@/components/sub-components/Shopcart_box.vue'
-import {mapGetters, mapgetters} from 'vuex'
+import {mapGetters, mapMutations} from 'vuex'
 
 export default {
   name: 'HelloWorld',
@@ -60,12 +61,26 @@ export default {
   },
   methods: {
     async getGoodsList() {
+      if(this.idstr.length <= 0) return
       const {data} = await this.$axios.get("/api/goods/getshopcarlist/" + this.idstr)
       console.log(data)
       if(data.status === 0 ) {
         return this.goodsList = data.message
       }
-    }
+    },
+    del(id) {
+      // 删除商品
+      // 只从界面上删除数据,还需要调用方法删除  vuex 中的数据
+      console.log(id)
+      this.goodsList.some((item, i) => {
+        if(item.id == id) {
+          this.goodsList.splice(i, 1)
+          return true
+        }
+      })
+      this.delFromCart(id)
+    },
+    ...mapMutations(['delFromCart'])
   },
   components: {
     nobox

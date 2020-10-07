@@ -139,7 +139,7 @@ export default {
             // id: this.id,
             // count: this.SlectedCount})
             // 直接调用 mutations 中映射出来的方法
-            this.addToCart({id: this.id, count: this.SlectedCount})
+            this.addToCart({id: this.id, count: this.SlectedCount, selected: true})
 
         },
         beforeEnter(el) {
