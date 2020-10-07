@@ -13,7 +13,7 @@ const store = new Vuex.Store({
   state: {
     // state 类似于 组件对象中的 data 属性
     // 这个state 中存储数据，就是我们全局共享的数据
-    // 在cart中，应该把每个商品存储为一个对象 { id, count, selected}
+    // 在cart中，应该把每个商品存储为一个对象 { id, count, selected. price}
     cart: car
   },
   mutations: {
@@ -57,6 +57,16 @@ const store = new Vuex.Store({
         }
       })
       localStorage.setItem("cart", JSON.stringify(state.cart))
+    },
+    changeSelectState(state, obj) {
+      // 根据提供的 obj 对象的 id 和 selected 属性，更改购物车中的商品选中状态
+      state.cart.some(item => {
+        if(item.id == obj.id) {
+          item.selected = obj.selected
+          return true
+        }
+      })
+      localStorage.setItem("cart", JSON.stringify(state.cart))
     }
   },
   getters: {
@@ -85,16 +95,37 @@ const store = new Vuex.Store({
       */
     },
     selectedObj(state) {
-      // id 对应的商品值被选中了
+      // id 对应的商品值是否被选中了
       let o = {}
       state.cart.forEach(item => o[item.id] = item.selected)
       return o
-      /* {  88: 3,
-            90: 4,
+      /* {  88: true
             selected: true
          } 
          返回的是默认值
       */
+    },
+    selectedCount(state) {
+      // 勾选的数量
+      let c = 0
+      state.cart.forEach(item => {
+        // 只有商品被选中了，才把数量勾选上
+        if(item.selected) {
+          c += item.count
+        }
+      })
+      return c
+    },
+    amount(state) {
+      // 总价
+      let c = 0
+      state.cart.forEach(item => {
+        // 只有商品被选中了，才把数量勾选上
+        if(item.selected) {
+          c += item.count * item.price
+        }
+      })
+      return c
     }
   }
 })

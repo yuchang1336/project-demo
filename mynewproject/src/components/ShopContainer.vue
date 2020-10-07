@@ -4,7 +4,14 @@
       <div class="mui-card" v-for="item in goodsList" :key="item.id">
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner goods-item">
-					  <mt-switch size="small"></mt-switch>
+
+            <!-- 选择器开关 -->
+            <!-- 双向数据绑定 selectedObj 中的 true or false-->
+					  <mt-switch size="small" v-model="selectedObj[item.id]" @change="changeSelect(item.id, selectedObj[item.id])"></mt-switch>
+
+
+
+
             <!-- 图片 -->
             <img :src="item.thumb_path" alt="">
             <!-- 信息区域 -->
@@ -36,11 +43,14 @@
 					<div class="mui-card-content-inner jiesuan">
             <div class="left">
               <p>总计(不含运费)</p>
-              <p>已勾选商品<span class="danger">0</span>件，总价<span  class="danger">￥1234</span></p>
+              <p>已勾选商品<span class="danger">{{selectedCount}}</span>件，总价<span  class="danger">￥{{amount}}</span></p>
             </div>
             <mt-button type="danger">结算</mt-button>
 					</div>
 				</div>
+
+
+        <!-- {{JSON.stringify(selectedObj)}} -->
 		</div>
 </div>
 </template>
@@ -61,7 +71,7 @@ export default {
   },
   methods: {
     async getGoodsList() {
-      if(this.idstr.length <= 0) return
+      if(this.idstr.length <= 0) return    //
       const {data} = await this.$axios.get("/api/goods/getshopcarlist/" + this.idstr)
       console.log(data)
       if(data.status === 0 ) {
@@ -80,13 +90,19 @@ export default {
       })
       this.delFromCart(id)
     },
-    ...mapMutations(['delFromCart'])
+    ...mapMutations(['delFromCart','changeSelectState']),
+    
+    changeSelect(id,select) {
+      // 更改开关的状态
+      console.log(id+"-------"+select)
+      this.changeSelectState({id, selected: select})
+    }
   },
   components: {
     nobox
   },
   computed: {
-    ...mapGetters(["idstr","countObj"])
+    ...mapGetters(["idstr","countObj","selectedObj","selectedCount","amount"])
   }
 }
 </script>
