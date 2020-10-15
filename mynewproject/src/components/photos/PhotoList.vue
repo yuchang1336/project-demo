@@ -1,40 +1,32 @@
 <template>
-  <div class="search">
-    <div id="slider" class="mui-slider">
-				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-					<div class="mui-scroll">
-						<a class="mui-control-item mui-active" href="#item1mobile" data-wid="tab-top-subpage-1.html">
-							推荐
-						</a>
-						<a class="mui-control-item" href="#item2mobile" data-wid="tab-top-subpage-2.html">
-							热点
-						</a>
-						<a class="mui-control-item" href="#item3mobile" data-wid="tab-top-subpage-3.html">
-							北京
-						</a>
-						<a class="mui-control-item" href="#item4mobile" data-wid="tab-top-subpage-4.html">
-							社会
-						</a>
-						<a class="mui-control-item" href="#item5mobile" data-wid="tab-top-subpage-5.html">
-							娱乐
-						</a>
-            	<a class="mui-control-item" href="#item5mobile" data-wid="tab-top-subpage-5.html">
-							aaa
-						</a>
-            	<a class="mui-control-item" href="#item5mobile" data-wid="tab-top-subpage-5.html">
-							bbb
-						</a>
-            	<a class="mui-control-item" href="#item5mobile" data-wid="tab-top-subpage-5.html">
-							ccc
-						</a>
+	<div>
+		<!-- 图片分类区域 -->
+	<div class="search">
+		<div id="slider" class="mui-slider">
+					<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+						<div class="mui-scroll">
+							<a :class="['mui-control-item', item.id === 0 ? 'mui-active' : '']" v-for="item in PhotoCategory" :key="item.id">
+								{{item.title}}
+							</a>
+						</div>
 					</div>
 				</div>
-			</div>
 
 
-    <h3>图片分享组件</h3>
+		<!-- 图片的列表区域 -->
+		<ul class="lazyul">
+			<li v-for="item in photolist" :key="item.id">
+				<!-- 需要注意的是 v-lazy 指定的是图片的地址 -->
+				<img v-lazy="item.img_url">
+				<div class="info">
+					<h1 class="info-title">{{item.title}}</h1>
+					<div class="info-content">{{item.zhaiyao}}</div>
+				</div>
+			</li>
+		</ul>
 	
   </div>
+	</div>
 </template>
 
 <script>
@@ -46,11 +38,32 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-     
-    }
+		PhotoCategory: [],  // 设置所有图片分类数据
+		photolist: []  //  图片列表
+	}
+  },
+  created() {
+	  this.getPhotoCategory(),
+	  this.getPhotoByCategory(0)
   },
   methods: {
-      
+	async getPhotoCategory() {
+	//   获取图片分类数据
+		const {data} = await this.$axios.get("/api/getimgcategory")
+		if(data.status === 0) {
+			// console.log(data.message)
+			// 后端返回数据中没有  顶部滑块  全部的数据，需要手动设置
+			data.message.unshift({title:'全部',id: 0})
+			return this.PhotoCategory = data.message
+		}
+	},
+	async getPhotoByCategory(id) {
+		// 根据图片分类的 id 来获取图片的数据
+		const {data} = await this.$axios.get("/api/getimages/" + id)
+		if(data.status === 0) {
+			return this.photolist = data.message
+		}
+	}
   },
   mounted() {
 	mui('.mui-scroll-wrapper').scroll({
@@ -64,5 +77,35 @@ export default {
 <style lang="scss" scoped>
 .mui-slider {
 	touch-action: pan-x; 
+}
+.lazyul{
+	// background-color: #000;
+	margin: 0;
+	padding: 10px;
+	li {
+		background-color: #ccc;
+		text-align: center;
+		box-shadow: 0 0 3px gray;
+		& + li {
+			margin-top: 5px;
+		}
+		img{
+			vertical-align: middle;
+			width: 100%
+		}
+		img[lazy=loading] {
+		width: 40px;
+		height: 300px;
+		margin: auto;
+		}
+	}
+}
+
+.info {
+	
+	.info-title {
+		
+		font-size: 14px;
+	}
 }
 </style>
