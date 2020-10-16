@@ -5,13 +5,18 @@ import HomeContainer from '@/components/HomeContainer'
 import ShopContainer from '@/components/ShopContainer'
 import SearchContainer from '@/components/SearchContainer'
 import MemberContainer from '@/components/MemberContainer'
+
 import Newslist from '@/components/news/Newslist'
 import Newsinfo from '@/components/news/Newsinfo'
+
 import photoList from '@/components/photos/photoList'
+import Photoinfo from '@/components/photos/Photoinfo'
+
 import GoodsList from '@/components/goods/GoodsList'
 import Goodsinfo from '@/components/goods/Goodsinfo'
 import GoodsDesc from '@/components/goods/GoodsDesc'
 import GoodsComment from '@/components/goods/GoodsComment'
+
 
 Vue.use(Router)
 
@@ -56,6 +61,12 @@ export default new Router({
       path: '/home/photolist',
       name: 'photoList',
       component: photoList,
+    },
+    {
+      path: '/home/photoinfo/:id',
+      name: 'Photosinfo',
+      component: Photoinfo,
+      props: true
     },
     {
       path: '/home/goodslist',
